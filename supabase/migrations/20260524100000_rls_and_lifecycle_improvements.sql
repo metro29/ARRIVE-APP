@@ -1,0 +1,6 @@
+-- DEPRECATED: Run as two steps instead (Postgres enum commit requirement):
+--
+--   1. 20260524100000a_booking_status_enum.sql
+--   2. 20260524100000b_rls_and_lifecycle_improvements.sql
+--
+-- Do not run this combined file.

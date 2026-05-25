@@ -1,0 +1,1 @@
+-- DEPRECATED — use 20260524120000_standardize_rejected_and_message.sql instead.

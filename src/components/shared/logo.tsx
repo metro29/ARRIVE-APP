@@ -1,0 +1,13 @@
+import Link from "next/link";
+import { Sparkles } from "lucide-react";
+
+export function Logo({ href = "/" }: { href?: string }) {
+  return (
+    <Link href={href} className="flex items-center gap-2 font-semibold tracking-tight">
+      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+        <Sparkles className="h-4 w-4" />
+      </span>
+      <span className="text-lg">Arrive</span>
+    </Link>
+  );
+}
