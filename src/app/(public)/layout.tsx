@@ -1,7 +1,6 @@
 import { Logo } from "@/components/shared/logo";
 import { ButtonLink } from "@/components/shared/button-link";
-import { GrainOverlay } from "@/components/motion/grain-overlay";
-import { CinematicProviders } from "@/components/motion/cinematic-providers";
+import { MarketingMotion } from "@/components/motion/marketing-motion";
 
 export default function PublicLayout({
   children,
@@ -9,36 +8,30 @@ export default function PublicLayout({
   children: React.ReactNode;
 }) {
   return (
-    <CinematicProviders>
-      <div className="theme-cinematic flex min-h-screen flex-col selection:bg-violet-500/30">
-        <GrainOverlay />
-        <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-[oklch(0.08_0.02_265/0.85)] backdrop-blur-xl">
-          <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-4 sm:px-8">
-            <Logo className="text-white" />
+    <MarketingMotion>
+      <div className="flex min-h-screen flex-col bg-background text-foreground">
+        <header className="sticky top-0 z-50 border-b border-border/80 bg-background/90 backdrop-blur-lg">
+          <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+            <Logo />
             <nav className="flex items-center gap-2">
-              <ButtonLink
-                href="/login"
-                variant="ghost"
-                className="rounded-full text-white/80 hover:bg-white/10 hover:text-white"
-              >
+              <ButtonLink href="/login" variant="ghost">
                 Log in
               </ButtonLink>
-              <ButtonLink
-                href="/signup"
-                className="glow-button rounded-full font-semibold"
-              >
+              <ButtonLink href="/signup" className="btn-shine">
                 Get started
               </ButtonLink>
             </nav>
           </div>
         </header>
-        <main className="flex-1 pt-[4.5rem]">{children}</main>
-        <footer className="border-t border-white/12 py-14 text-center">
-          <p className="text-sm font-medium text-white/65">
-            © {new Date().getFullYear()} Arrive — Houston & Cypress event venues
-          </p>
+        <main className="flex-1">{children}</main>
+        <footer className="border-t border-border bg-muted/20 py-12">
+          <div className="mx-auto max-w-6xl px-4 text-center sm:px-6">
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Arrive — Houston & Cypress event venues
+            </p>
+          </div>
         </footer>
       </div>
-    </CinematicProviders>
+    </MarketingMotion>
   );
 }

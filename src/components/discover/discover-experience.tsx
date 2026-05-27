@@ -17,6 +17,7 @@ import { RestaurantSearch } from "@/components/discover/restaurant-search";
 import { EmptyState } from "@/components/shared/empty-state";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
+import { StartupMesh } from "@/components/landing/startup-mesh";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -62,7 +63,10 @@ export function DiscoverExperience({
   const exploreAll = filtersActive ? visible : enriched;
 
   return (
-    <div className="flex flex-col gap-10 lg:flex-row lg:gap-12">
+    <div className="relative flex flex-col gap-10 lg:flex-row lg:gap-12">
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden opacity-60">
+        <StartupMesh />
+      </div>
       <aside className="hidden w-full max-w-[17.5rem] shrink-0 lg:block">
         <div className="sticky top-24">
           <DiscoverFiltersPanel

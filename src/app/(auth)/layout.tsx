@@ -1,7 +1,5 @@
 import { Logo } from "@/components/shared/logo";
-import { HeroWebGL } from "@/components/motion/hero-webgl";
-import { GrainOverlay } from "@/components/motion/grain-overlay";
-import { CinematicProviders } from "@/components/motion/cinematic-providers";
+import { StartupMesh } from "@/components/landing/startup-mesh";
 
 export default function AuthLayout({
   children,
@@ -9,21 +7,16 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <CinematicProviders>
-      <div className="theme-cinematic relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 py-12">
-        <GrainOverlay />
-        <div className="absolute inset-0 -z-10 opacity-60">
-          <HeroWebGL />
+    <div className="relative flex min-h-screen flex-col bg-background">
+      <StartupMesh />
+      <header className="relative z-10 border-b border-border/60 bg-background/80 px-4 py-5 backdrop-blur-md sm:px-6">
+        <Logo />
+      </header>
+      <main className="relative z-10 flex flex-1 items-center justify-center px-4 py-12">
+        <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-[0_16px_48px_-20px_oklch(0.25_0.06_265/0.2)]">
+          {children}
         </div>
-        <div className="relative z-10 mb-10">
-          <Logo className="text-white" />
-        </div>
-        <div className="relative z-10 w-full max-w-md rounded-2xl border border-white/15 bg-[oklch(0.14_0.025_265/0.92)] p-1 shadow-[0_32px_100px_-24px_oklch(0.05_0.05_265/1)] backdrop-blur-2xl">
-          <div className="rounded-[calc(1rem-4px)] bg-[oklch(0.16_0.03_265)] p-6 text-foreground sm:p-8">
-            {children}
-          </div>
-        </div>
-      </div>
-    </CinematicProviders>
+      </main>
+    </div>
   );
 }
