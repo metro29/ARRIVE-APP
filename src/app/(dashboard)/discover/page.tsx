@@ -7,7 +7,7 @@ export default async function DiscoverPage() {
 
   return (
     <div className="relative space-y-10">
-      <div className="pointer-events-none absolute -top-24 right-0 h-64 w-64 rounded-full bg-primary/10 blur-[80px]" aria-hidden />
+      <div className="pointer-events-none absolute -top-24 right-0 h-64 w-64 rounded-full bg-primary/15 blur-[80px]" aria-hidden />
       <PageHeader
         title="Find your place"
         description="Houston and Cypress venues for birthdays, team dinners, BBQ celebrations, and everything in between."

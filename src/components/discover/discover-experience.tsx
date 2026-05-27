@@ -74,7 +74,7 @@ export function DiscoverExperience({
       </aside>
 
       <div className="min-w-0 flex-1 space-y-10">
-        <ScrollReveal className="surface-soft space-y-5 p-5 sm:p-6" y={24}>
+        <div className="surface-soft space-y-5 p-5 sm:p-6">
           <RestaurantSearch value={search} onChange={setSearch} />
 
           <DiscoverFilterChips
@@ -111,9 +111,9 @@ export function DiscoverExperience({
               </div>
             </SheetContent>
           </Sheet>
-        </ScrollReveal>
+        </div>
 
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm font-medium text-muted-foreground">
           {visible.length === 0
             ? "No matches yet"
             : `${visible.length} place${visible.length === 1 ? "" : "s"} ${

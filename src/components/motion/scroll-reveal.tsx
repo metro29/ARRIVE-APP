@@ -22,9 +22,9 @@ export function ScrollReveal({
   children,
   className,
   delay = 0,
-  y = 48,
-  scale = 0.96,
-  duration = 1.1,
+  y = 40,
+  scale = 0.98,
+  duration = 1,
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = usePrefersReducedMotion();
@@ -33,30 +33,26 @@ export function ScrollReveal({
     () => {
       if (!ref.current || reduced) return;
 
-      gsap.from(ref.current, {
-        opacity: 0,
-        y,
-        scale,
-        duration,
-        delay,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top 88%",
-          toggleActions: "play none none reverse",
-        },
-      });
+      gsap.fromTo(
+        ref.current,
+        { opacity: 0, y, scale },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration,
+          delay,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ref.current,
+            start: "top 90%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
     },
     { scope: ref, dependencies: [reduced, delay, y, scale, duration] }
   );
 
-  return (
-    <div
-      ref={ref}
-      className={cn(className, reduced && "opacity-100")}
-      style={reduced ? undefined : { opacity: 0 }}
-    >
-      {children}
-    </div>
-  );
+  return <div ref={ref} className={cn(className)}>{children}</div>;
 }

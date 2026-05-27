@@ -52,8 +52,8 @@
 }
 
 :root {
-  --background: oklch(0.988 0.004 265);
-  --foreground: oklch(0.2 0.02 265);
+  --background: oklch(0.99 0.003 265);
+  --foreground: oklch(0.18 0.025 265);
   --surface: oklch(0.995 0.002 265);
   --surface-raised: oklch(1 0 0);
   --card: oklch(1 0 0);
@@ -65,7 +65,7 @@
   --secondary: oklch(0.965 0.006 265);
   --secondary-foreground: oklch(0.28 0.02 265);
   --muted: oklch(0.965 0.006 265);
-  --muted-foreground: oklch(0.5 0.02 265);
+  --muted-foreground: oklch(0.42 0.03 265);
   --accent: oklch(0.96 0.01 265);
   --accent-foreground: oklch(0.28 0.02 265);
   --destructive: oklch(0.55 0.18 25);
@@ -164,28 +164,35 @@
   }
 }
 
-/* Cinematic marketing theme (landing / public) */
+/* Cinematic marketing theme (landing / public) — high contrast */
 .theme-cinematic {
-  --background: oklch(0.11 0.02 265);
-  --foreground: oklch(0.97 0.01 265);
-  --surface: oklch(0.14 0.022 265);
-  --surface-raised: oklch(0.17 0.025 265);
-  --card: oklch(0.16 0.024 265);
-  --card-foreground: oklch(0.97 0.01 265);
-  --popover: oklch(0.16 0.024 265);
-  --popover-foreground: oklch(0.97 0.01 265);
-  --primary: oklch(0.68 0.17 265);
-  --primary-foreground: oklch(0.12 0.02 265);
-  --secondary: oklch(0.2 0.03 265);
-  --secondary-foreground: oklch(0.92 0.01 265);
-  --muted: oklch(0.2 0.03 265);
-  --muted-foreground: oklch(0.65 0.04 265);
-  --accent: oklch(0.22 0.04 265);
-  --accent-foreground: oklch(0.95 0.01 265);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.68 0.17 265 / 45%);
+  --background: oklch(0.09 0.025 265);
+  --foreground: oklch(0.99 0.005 265);
+  --surface: oklch(0.14 0.03 265);
+  --surface-raised: oklch(0.18 0.035 265);
+  --card: oklch(0.15 0.03 265);
+  --card-foreground: oklch(0.98 0.005 265);
+  --popover: oklch(0.15 0.03 265);
+  --popover-foreground: oklch(0.98 0.005 265);
+  --primary: oklch(0.72 0.19 265);
+  --primary-foreground: oklch(0.1 0.02 265);
+  --secondary: oklch(0.22 0.04 265);
+  --secondary-foreground: oklch(0.95 0.01 265);
+  --muted: oklch(0.22 0.04 265);
+  --muted-foreground: oklch(0.78 0.04 265);
+  --accent: oklch(0.24 0.05 265);
+  --accent-foreground: oklch(0.98 0.005 265);
+  --border: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.72 0.19 265 / 50%);
   color-scheme: dark;
+  cursor: none;
+}
+
+@media (pointer: coarse) {
+  .theme-cinematic {
+    cursor: auto;
+  }
 }
 
 .font-display {
@@ -260,7 +267,74 @@
 
 .grain-overlay {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.028;
   animation: grain-shift 0.5s steps(2) infinite;
+}
+
+.text-hero {
+  color: oklch(0.99 0.005 265);
+  text-shadow:
+    0 2px 24px oklch(0.05 0.05 265 / 0.8),
+    0 0 80px oklch(0.45 0.2 265 / 0.35);
+}
+
+.text-hero-muted {
+  color: oklch(0.82 0.03 265);
+}
+
+.text-gradient-hero {
+  background: linear-gradient(
+    120deg,
+    oklch(0.98 0.04 265) 0%,
+    oklch(0.78 0.2 265) 45%,
+    oklch(0.7 0.22 300) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+
+.hero-vignette::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 90% 70% at 30% 50%,
+    oklch(0.12 0.03 265 / 0.5) 0%,
+    oklch(0.09 0.025 265 / 0.95) 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  background: oklch(0.85 0.15 265);
+  box-shadow: 0 0 12px oklch(0.6 0.2 265);
+}
+
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border-radius: 50%;
+  border: 1.5px solid oklch(0.75 0.18 265 / 0.65);
+  transition:
+    width 0.25s ease,
+    height 0.25s ease,
+    margin 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.cursor-ring--active {
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border-color: oklch(0.9 0.12 265);
 }
 
 @keyframes grain-shift {
