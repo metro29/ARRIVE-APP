@@ -16,6 +16,7 @@ import { DiscoverFiltersPanel } from "@/components/discover/discover-filters";
 import { RestaurantSearch } from "@/components/discover/restaurant-search";
 import { EmptyState } from "@/components/shared/empty-state";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { ScrollReveal } from "@/components/motion/scroll-reveal";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -73,7 +74,7 @@ export function DiscoverExperience({
       </aside>
 
       <div className="min-w-0 flex-1 space-y-10">
-        <div className="surface-soft space-y-5 p-5 sm:p-6">
+        <ScrollReveal className="surface-soft space-y-5 p-5 sm:p-6" y={24}>
           <RestaurantSearch value={search} onChange={setSearch} />
 
           <DiscoverFilterChips
@@ -110,7 +111,7 @@ export function DiscoverExperience({
               </div>
             </SheetContent>
           </Sheet>
-        </div>
+        </ScrollReveal>
 
         <p className="text-sm text-muted-foreground">
           {visible.length === 0
@@ -129,23 +130,20 @@ export function DiscoverExperience({
           >
             {!filtersActive &&
               marketSections.map((section) => (
-                <section key={section.id} className="space-y-6">
+                <ScrollReveal key={section.id} className="space-y-6">
                   <SectionHeading
                     title={section.title}
                     description={section.description}
                   />
                   <div className="grid gap-8 sm:grid-cols-2">
-                    {section.restaurants.map((restaurant, index) => (
-                      <div
+                    {section.restaurants.map((restaurant) => (
+                      <RestaurantCard
                         key={restaurant.id}
-                        className="page-enter"
-                        style={{ animationDelay: `${index * 40}ms` }}
-                      >
-                        <RestaurantCard restaurant={restaurant} />
-                      </div>
+                        restaurant={restaurant}
+                      />
                     ))}
                   </div>
-                </section>
+                </ScrollReveal>
               ))}
 
             {featured && filtersActive && (

@@ -1,5 +1,6 @@
 import { Logo } from "@/components/shared/logo";
 import { ButtonLink } from "@/components/shared/button-link";
+import { GrainOverlay } from "@/components/motion/grain-overlay";
 
 export default function PublicLayout({
   children,
@@ -7,21 +8,30 @@ export default function PublicLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      <header className="border-b border-border/60 bg-background/90 backdrop-blur-md">
-        <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Logo />
+    <div className="theme-cinematic flex min-h-screen flex-col">
+      <GrainOverlay />
+      <header className="fixed top-0 z-50 w-full border-b border-white/6 bg-background/40 backdrop-blur-2xl">
+        <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-4 sm:px-8">
+          <Logo className="text-foreground" />
           <nav className="flex items-center gap-2">
-            <ButtonLink href="/login" variant="ghost">
+            <ButtonLink
+              href="/login"
+              variant="ghost"
+              className="rounded-full text-muted-foreground hover:text-foreground"
+            >
               Log in
             </ButtonLink>
-            <ButtonLink href="/signup">Get started</ButtonLink>
+            <ButtonLink href="/signup" className="glow-button rounded-full">
+              Get started
+            </ButtonLink>
           </nav>
         </div>
       </header>
-      <main className="flex-1 page-enter">{children}</main>
-      <footer className="border-t border-border/60 py-10 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Arrive — made for real gatherings.
+      <main className="flex-1 pt-[4.5rem]">{children}</main>
+      <footer className="border-t border-white/8 py-14 text-center">
+        <p className="text-sm text-muted-foreground">
+          © {new Date().getFullYear()} Arrive — Houston & Cypress event venues
+        </p>
       </footer>
     </div>
   );

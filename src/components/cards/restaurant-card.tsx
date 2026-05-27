@@ -1,3 +1,6 @@
+"use client";
+
+import { useRef, type MouseEvent } from "react";
 import Image from "next/image";
 import { MapPin, Sparkles, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +16,7 @@ import {
 import { getPerfectForLabel } from "@/lib/discover/restaurant-discovery";
 import { cn } from "@/lib/utils";
 import { PRICE_LEVEL_LABELS } from "@/types/restaurant";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import type { RankedRestaurant, RestaurantEnriched } from "@/types/restaurant";
 
 interface RestaurantCardProps {
@@ -22,15 +26,36 @@ interface RestaurantCardProps {
 }
 
 export function RestaurantCard({ restaurant, featured }: RestaurantCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const reduced = usePrefersReducedMotion();
   const perfectFor = getPerfectForLabel(restaurant);
   const isFeatured = featured ?? restaurant.isRecommended;
 
+  const onMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (reduced || !cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    cardRef.current.style.transform = `perspective(900px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-4px)`;
+  };
+
+  const onLeave = () => {
+    if (!cardRef.current) return;
+    cardRef.current.style.transform = "";
+  };
+
   return (
+    <div
+      ref={cardRef}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      className="transition-transform duration-200 ease-out will-change-transform"
+    >
     <Card
       className={cn(
-        "hover-lift group overflow-hidden border-0",
+        "card-shine group relative overflow-hidden border-0 transition-[box-shadow] duration-500",
         isFeatured &&
-          "ring-2 ring-primary/25 shadow-[0_12px_40px_-16px_oklch(0.45_0.12_265/0.35)]"
+          "ring-2 ring-primary/30 shadow-[0_20px_60px_-20px_oklch(0.45_0.14_265/0.45)]"
       )}
     >
       <div className="relative aspect-[5/3] overflow-hidden bg-muted/50">
@@ -38,24 +63,27 @@ export function RestaurantCard({ restaurant, featured }: RestaurantCardProps) {
           src={restaurant.image_url}
           alt={restaurant.name}
           fill
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
           sizes="(max-width: 768px) 100vw, 33vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
         <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-          <Badge variant="secondary" className="bg-background/90 backdrop-blur-sm">
+          <Badge
+            variant="secondary"
+            className="border-0 bg-background/80 backdrop-blur-md"
+          >
             {restaurant.cuisine_type}
           </Badge>
           {isFeatured && (
-            <Badge className="gap-1 bg-primary/90 text-primary-foreground shadow-sm">
+            <Badge className="gap-1 border-0 bg-primary/90 text-primary-foreground shadow-[0_0_20px_oklch(0.5_0.2_265/0.5)]">
               <Sparkles className="h-3 w-3" />
-              Recommended for you
+              Recommended
             </Badge>
           )}
         </div>
       </div>
       <CardHeader className="space-y-2 pb-0">
-        <CardTitle className="text-[1.0625rem] leading-snug">
+        <CardTitle className="font-display text-xl leading-snug tracking-tight">
           {restaurant.name}
         </CardTitle>
         <CardDescription className="line-clamp-2 text-[0.8125rem]">
@@ -91,12 +119,13 @@ export function RestaurantCard({ restaurant, featured }: RestaurantCardProps) {
       <CardFooter className="border-t-0 bg-transparent pt-0">
         <ButtonLink
           href={`/restaurant/${restaurant.id}`}
-          className="w-full"
+          className="w-full rounded-xl"
           size="lg"
         >
           Plan this event
         </ButtonLink>
       </CardFooter>
     </Card>
+    </div>
   );
 }
